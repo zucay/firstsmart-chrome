@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+  "name": "firstsmart-chrome",
+  "description": "",
+  "version": "1.0",
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  "background": {
+    "scripts": ["js/background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "css": ["css/style.css"],
+      "js": ["js/content.js"]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "https://*/*",
+    "http://*/*"
+  ]
+}
