@@ -1,9 +1,6 @@
-alert('tracking start1');
-
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   sendUrl(tab.url);
 });
-
 
 var checkedUrl = null;
 function sendUrl(uncheckedUrl) {
@@ -23,7 +20,7 @@ function sendUrl(uncheckedUrl) {
           //xhr here
           var log = checkedUrl;
           checkedUrl = null;
-          alert(log);
+          //alert(log);
         }
       });
     });
