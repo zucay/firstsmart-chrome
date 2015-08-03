@@ -8,7 +8,7 @@ function sendUrl(uncheckedUrl) {
   if(regex.exec(uncheckedUrl)) {
     checkedUrl = uncheckedUrl;
 
-    // チャタリング防止のためのタイマー。
+    // チャタリング防止(通信回数を減らす)のためのタイマーコールバック。
     chrome.alarms.create('onSetUrl', {when: Date.now() + 1000});
     chrome.alarms.onAlarm.addListener(function(alarm) {
       if('onSetUrl' !== alarm.name) {
@@ -16,13 +16,22 @@ function sendUrl(uncheckedUrl) {
       }
 
       chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
-        if(checkedUrl && checkedUrl === tabs[0].url) {
-          //xhr here
-          var log = checkedUrl;
+        if(checkedUrl === tabs[0].url) {
+          sendViaSocket(checkedUrl);
           checkedUrl = null;
-          //alert(log);
         }
       });
     });
   }
+}
+
+var socket = null;
+function sendViaSocket(url) {
+  var roomName = 'myroom';
+  var socketEndPoint = 'wss://firstsmart-nodejs.herokuapp.com/';
+  if(!socket) {
+    socket = io(socketEndPoint);
+    socket.emit('joinRoom', roomName);
+  }
+  socket.emit('msg', url);
 }

@@ -8,7 +8,10 @@
     "default_popup": "popup.html"
   },
   "background": {
-    "scripts": ["js/background.js"]
+    "scripts": [
+      "js/lib/socket.io-1.3.6.js",
+      "js/background.js"
+    ]
   },
   "content_scripts": [
     {
